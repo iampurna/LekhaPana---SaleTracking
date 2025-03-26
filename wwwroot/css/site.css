@@ -1,0 +1,128 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #f8f9fa;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.badge {
+  font-weight: 500;
+}
+
+.btn-group .btn {
+  margin-right: 0.25rem;
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}
+
+.navbar {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Dashboard stats */
+.stats-card {
+  border-left: 4px solid;
+  transition: transform 0.2s;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-card-customers {
+  border-left-color: #0d6efd;
+}
+
+.stats-card-products {
+  border-left-color: #198754;
+}
+
+.stats-card-sales {
+  border-left-color: #dc3545;
+}
+
+.stats-card-invoices {
+  border-left-color: #ffc107;
+}
+
+.stats-icon {
+  font-size: 2rem;
+  opacity: 0.8;
+}
+@media print {
+  .no-print {
+      display: none !important;
+  }
+  
+  .card {
+      border: none !important;
+      box-shadow: none !important;
+  }
+  
+  .card-header {
+      background-color: #fff !important;
+      color: #000 !important;
+  }
+  
+  .table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+  }
+  
+  .table td, .table th {
+      background-color: #fff !important;
+      border-color: #000 !important;
+  }
+}

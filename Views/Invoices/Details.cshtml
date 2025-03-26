@@ -1,0 +1,92 @@
+@model LekhaPana.Models.Invoice
+
+@{
+ViewData["Title"] = "Invoice Details";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Invoice #@Model.InvoiceNumber</h3>
+            <div>
+                @if (!Model.IsPaid)
+                {
+                <form asp-action="MarkAsPaid" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@Model.InvoiceId" />
+                    <button type="submit" class="btn btn-success">Mark as Paid</button>
+                </form>
+                }
+                <a onclick="window.print();" class="btn btn-light ml-2"><i class="bi bi-printer"></i> Print</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-sm-6">
+                    <h6 class="mb-3">Customer:</h6>
+                    <div>
+                        <strong>@Model.Customer.Name</strong>
+                    </div>
+                    <div>@Model.Customer.Email</div>
+                    <div>@Model.Customer.Phone</div>
+                    <div>@Model.Customer.Address</div>
+                </div>
+
+                <div class="col-sm-6">
+                    <h6 class="mb-3">Invoice Details:</h6>
+                    <div>Invoice #: <strong>@Model.InvoiceNumber</strong></div>
+                    <div>Date: @Model.InvoiceDate.ToShortDateString()</div>
+                    <div>Status:
+                        @if (Model.IsPaid)
+                        {
+                        <span class="badge bg-success">Paid</span>
+                        }
+                        else
+                        {
+                        <span class="badge bg-danger">Unpaid</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.SalesTransactions)
+                    {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Rate.ToString("C")</td>
+                        <td>@item.Total.ToString("C")</td>
+                    </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                        <tr>
+                            <td class="left"><strong>Total</strong></td>
+                            <td class="right"><strong>@Model.InvoiceTotal.ToString("C")</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

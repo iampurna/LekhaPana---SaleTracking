@@ -1,0 +1,49 @@
+@model IEnumerable<LekhaPana.Models.Invoice>
+
+@{
+ViewData["Title"] = "Invoices";
+}
+
+<div class="container mt-4">
+    <h1>Invoices</h1>
+
+    <p>
+        <a asp-action="Generate" class="btn btn-primary">Generate New Invoice</a>
+    </p>
+
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Invoice #</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>@item.InvoiceNumber</td>
+            <td>@item.InvoiceDate.ToShortDateString()</td>
+            <td>@item.Customer.Name</td>
+            <td>@item.InvoiceTotal.ToString("C")</td>
+            <td>
+                @if (item.IsPaid)
+                {
+                <span class="badge bg-success">Paid</span>
+                }
+                else
+                {
+                <span class="badge bg-danger">Unpaid</span>
+                }
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.InvoiceId" class="btn btn-sm btn-outline-primary">View</a>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+</div>

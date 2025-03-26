@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-4">
+    <div class="jumbotron bg-light p-5 rounded">
+        <h1 class="display-4">Welcome to LekhaPana</h1>
+        <p class="lead">Sales and Invoice Management System</p>
+        <hr class="my-4">
+        <p>Access your Sales Data, Manage Customers, and Generate Invoices All in One place.</p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg me-2" asp-controller="SalesTransaction" asp-action="Create">New Sale</a>
+            <a class="btn btn-success btn-lg" asp-controller="Invoice" asp-action="Generate">Generate Invoice</a>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-box"></i> Products</h5>
+                    <p class="card-text">Manage your product catalog</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-light">View Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-people"></i> Customers</h5>
+                    <p class="card-text">Manage your customer database</p>
+                    <a asp-controller="Customer" asp-action="Index" class="btn btn-light">View Customers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-cart"></i> Sales</h5>
+                    <p class="card-text">View and record sales transactions</p>
+                    <a asp-controller="SalesTransaction" asp-action="Index" class="btn btn-light">View Sales</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-file-text"></i> Invoices</h5>
+                    <p class="card-text">Generate and manage invoices</p>
+                    <a asp-controller="Invoice" asp-action="Index" class="btn btn-light">View Invoices</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

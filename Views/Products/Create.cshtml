@@ -1,0 +1,127 @@
+@model LekhaPana.Models.Product
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<div class="container mt-4">
+    <h1>Create Product</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" asp-controller="Products">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label asp-for="IsActive" class="form-check-label"></label>
+                </div>
+
+                <input name="__RequestVerificationToken" type="hidden" value="@Html.AntiForgeryToken()" />
+
+                <div class="form-group mt-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function ()
+        {
+            var form = $('form');
+
+            form.submit(function (e)
+            {
+                e.preventDefault();
+
+                if (form.valid())
+                {
+                    $.ajax({
+                        url: '@Url.Action("Create", "Products")',
+                        type: 'POST',
+                        data: form.serialize(),
+                        headers: {
+                            'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (result)
+                        {
+                            if (result.success)
+                            {
+                                window.location.href = '@Url.Action("Index", "Products")';
+                            } else
+                            {
+                                $('.validation-summary-errors').html(result.message);
+                            }
+                        },
+                        error: function (xhr, status, error)
+                        {
+                            console.error('Error:', error);
+                            $('.validation-summary-errors').html('An error occurred while processing your request.');
+                        }
+                    });
+                }
+            });
+
+            // Add custom price validation
+            $.validator.addMethod('decimal', function (value, element)
+            {
+                return this.optional(element) || /^\d+(\.\d{0,2})?$/.test(value);
+            }, 'Please enter a valid price with up to 2 decimal places');
+
+            // Apply custom validation rules
+            form.validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    Description: {
+                        maxlength: 200
+                    },
+                    Price: {
+                        required: true,
+                        decimal: true
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: "Name is required",
+                        maxlength: "Name cannot exceed 100 characters"
+                    },
+                    Description: {
+                        maxlength: "Description cannot exceed 200 characters"
+                    },
+                    Price: {
+                        required: "Price is required"
+                    }
+                }
+            });
+        });
+    </script>
+}

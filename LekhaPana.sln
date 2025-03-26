@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LekhaPana", "LekhaPana.csproj", "{BBE901C1-5418-433A-A8E7-9AD6EC2D06A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBE901C1-5418-433A-A8E7-9AD6EC2D06A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE901C1-5418-433A-A8E7-9AD6EC2D06A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE901C1-5418-433A-A8E7-9AD6EC2D06A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE901C1-5418-433A-A8E7-9AD6EC2D06A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

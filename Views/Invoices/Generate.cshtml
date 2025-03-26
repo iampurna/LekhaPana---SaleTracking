@@ -1,0 +1,45 @@
+
+@model LekhaPana.Models.ViewModel.GenerateInvoiceViewModel
+
+@{
+ViewData["Title"] = "Generate Invoice";
+}
+
+<div class="container mt-4">
+    <h1>Generate Invoice</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Generate">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="CustomerId" class="control-label"></label>
+                    <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.Customers">
+                        <option value="">-- Select Customer --</option>
+                    </select>
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="InvoiceDate" class="control-label"></label>
+                    <input asp-for="InvoiceDate" class="form-control" type="date" />
+                    <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-3">
+                    <input type="submit" value="Generate Invoice" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                    <small>This will generate an invoice for all uninvoiced sales transactions for the selected customer on the selected date.</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
