@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace LekhaPana.Models;
 
@@ -23,5 +24,6 @@ public class Product
 
 
     // Navigation property
-    public virtual ICollection<SalesTransaction> SalesTransactions { get; set; }
+    [ValidateNever]
+    public virtual ICollection<SalesTransaction> SalesTransactions { get; set; } = new List<SalesTransaction>();
 }

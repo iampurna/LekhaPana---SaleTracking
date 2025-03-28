@@ -9,8 +9,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <form asp-action="Create" asp-controller="Products">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form id="createForm" asp-action="Create" asp-controller="Products">
+                <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
+                    <input asp-for="Price" class="form-control" type="number" step="0.01" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
 
@@ -35,10 +35,10 @@
                     <label asp-for="IsActive" class="form-check-label"></label>
                 </div>
 
-                <input name="__RequestVerificationToken" type="hidden" value="@Html.AntiForgeryToken()" />
+                @Html.AntiForgeryToken()
 
                 <div class="form-group mt-3">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <button type="submit" class="btn btn-primary">Create</button>
                     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
                 </div>
             </form>
@@ -52,50 +52,50 @@
     }
 
     <script>
-        $(document).ready(function ()
-        {
-            var form = $('form');
-
-            form.submit(function (e)
-            {
+        $(document).ready(function () {
+            $('#createForm').submit(function (e) {
                 e.preventDefault();
-
-                if (form.valid())
-                {
+                
+                if ($(this).valid()) {
+                    var formData = $(this).serializeArray();
+                    
                     $.ajax({
                         url: '@Url.Action("Create", "Products")',
                         type: 'POST',
-                        data: form.serialize(),
+                        data: formData,
                         headers: {
-                            'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
+                            'X-Requested-With': 'XMLHttpRequest'
                         },
-                        success: function (result)
-                        {
-                            if (result.success)
-                            {
+                        success: function (result) {
+                            if (result.success) {
                                 window.location.href = '@Url.Action("Index", "Products")';
-                            } else
-                            {
-                                $('.validation-summary-errors').html(result.message);
+                            } else {
+                                $('.validation-summary-valid').addClass('validation-summary-errors')
+                                    .removeClass('validation-summary-valid')
+                                    .find('ul')
+                                    .empty()
+                                    .append($('<li>').text(result.message));
                             }
                         },
-                        error: function (xhr, status, error)
-                        {
+                        error: function (xhr, status, error) {
                             console.error('Error:', error);
-                            $('.validation-summary-errors').html('An error occurred while processing your request.');
+                            $('.validation-summary-valid').addClass('validation-summary-errors')
+                                .removeClass('validation-summary-valid')
+                                .find('ul')
+                                .empty()
+                                .append($('<li>').text('An error occurred while processing your request.'));
                         }
                     });
                 }
             });
 
             // Add custom price validation
-            $.validator.addMethod('decimal', function (value, element)
-            {
+            $.validator.addMethod('decimal', function (value, element) {
                 return this.optional(element) || /^\d+(\.\d{0,2})?$/.test(value);
             }, 'Please enter a valid price with up to 2 decimal places');
 
             // Apply custom validation rules
-            form.validate({
+            $('#createForm').validate({
                 rules: {
                     Name: {
                         required: true,

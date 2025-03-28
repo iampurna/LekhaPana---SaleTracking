@@ -258,3 +258,4 @@
 /Users/purnalungeli/RiderProjects/LekhaPana/obj/Debug/net8.0/LekhaPana.pdb
 /Users/purnalungeli/RiderProjects/LekhaPana/obj/Debug/net8.0/LekhaPana.genruntimeconfig.cache
 /Users/purnalungeli/RiderProjects/LekhaPana/obj/Debug/net8.0/ref/LekhaPana.dll
+/Users/purnalungeli/RiderProjects/LekhaPana/obj/Debug/net8.0/LekhaPana.sourcelink.json

@@ -1,4 +1,5 @@
 @model LekhaPana.Models.Product
+@Html.AntiForgeryToken()
 
 @{
     ViewData["Title"] = "Edit Product";
@@ -10,33 +11,33 @@
         <div class="col-md-6">
             <form asp-action="Edit" asp-controller="Products" asp-route-id="@Model.ProductId">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                
+
                 <input type="hidden" asp-for="ProductId" />
                 <input name="__RequestVerificationToken" type="hidden" value="@Html.AntiForgeryToken()" />
-                
+
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
                     <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
                     <input asp-for="Price" class="form-control" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group form-check">
                     <input asp-for="IsActive" class="form-check-input" />
                     <label asp-for="IsActive" class="form-check-label"></label>
                 </div>
-                
+
                 <div class="form-group mt-3">
                     <input type="submit" value="Save" class="btn btn-primary" />
                     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
@@ -47,30 +48,40 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function ()
+        {
             var form = $('form');
 
-            form.submit(function(e) {
+            form.submit(function (e)
+            {
                 e.preventDefault();
-                if (form.valid()) {
+                if (form.valid())
+                {
                     $.ajax({
                         url: '@Url.Action("Edit", "Products", new { id = Model.ProductId })',
                         type: 'POST',
                         data: form.serialize(),
                         headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
                             'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
                         },
-                        success: function(result) {
-                            if (result.success) {
+                        success: function (result)
+                        {
+                            if (result.success)
+                            {
                                 window.location.href = '@Url.Action("Index", "Products")';
-                            } else {
+                            } else
+                            {
                                 $('.validation-summary-errors').html(result.message);
                             }
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error)
+                        {
                             console.error('Error:', error);
                             $('.validation-summary-errors').html('An error occurred while processing your request.');
                         }
@@ -78,7 +89,8 @@
                 }
             });
 
-            $.validator.addMethod('decimal', function(value, element) {
+            $.validator.addMethod('decimal', function (value, element)
+            {
                 return this.optional(element) || /^\d+(\.\d{0,2})?$/.test(value);
             }, 'Please enter a valid price with up to 2 decimal places');
 

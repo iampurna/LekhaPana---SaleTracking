@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace LekhaPana.Controllers
 {
-    [Route("Product")]
     [Route("Products")]
     public class ProductsController : Controller
     {
@@ -38,38 +37,35 @@ namespace LekhaPana.Controllers
         {
             if (!ModelState.IsValid)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage);
+
+                return Json(new
                 {
-                    return Json(new
-                    {
-                        success = false,
-                        message = string.Join("; ", ModelState.Values
-                            .SelectMany(x => x.Errors)
-                            .Select(x => x.ErrorMessage))
-                    });
-                }
-                return View(product);
+                    success = false,
+                    message = string.Join(", ", errors)
+                });
             }
 
             try
             {
-                _context.Add(product);
+                _context.Products.Add(product);
                 await _context.SaveChangesAsync();
 
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Json(new
                 {
-                    return Json(new { success = true });
-                }
-                return RedirectToAction(nameof(Index));
+                    success = true,
+                    message = "Product created successfully"
+                });
             }
             catch (Exception ex)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Json(new
                 {
-                    return Json(new { success = false, message = "Error saving product" });
-                }
-                ModelState.AddModelError("", "Error saving product");
-                return View(product);
+                    success = false,
+                    message = "Error creating product: " + ex.Message
+                });
             }
         }
 
@@ -120,21 +116,11 @@ namespace LekhaPana.Controllers
             {
                 _context.Update(product);
                 await _context.SaveChangesAsync();
-
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = true });
-                }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true, message = "Product updated successfully!" });
             }
             catch (Exception ex)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = "Error updating product" });
-                }
-                ModelState.AddModelError("", "Error updating product");
-                return View(product);
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
