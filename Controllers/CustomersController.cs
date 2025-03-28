@@ -24,6 +24,18 @@ namespace LekhaPana.Controllers
             return View(customers);
         }
 
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customer == null) return NotFound();
+
+            return View(customer);
+        }
+
         // GET: Customers/Create
         [HttpGet("Create")]
         public IActionResult Create()
@@ -106,9 +118,9 @@ namespace LekhaPana.Controllers
 
             return View(customer);
         }
-        
+
         // POST: Customers/Delete/5
-        [HttpPost("Delete/{id}"), ActionName("DeleteConfirmed")]
+        [HttpPost("DeleteConfirmed/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -117,15 +129,53 @@ namespace LekhaPana.Controllers
                 var customer = await _context.Customers.FindAsync(id);
                 if (customer == null) return NotFound();
 
-                _context.Customers.Remove(customer);
+                // Instead of removing, just mark as inactive
+                customer.IsActive = false;
+                _context.Update(customer);
                 await _context.SaveChangesAsync();
 
-                TempData["Success"] = "Customer deleted successfully!";
+                TempData["Success"] = "Customer deactivated successfully!";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"Failed to delete customer: {ex.Message}";
+                TempData["Error"] = $"Failed to deactivate customer: {ex.Message}";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        // GET: Customers/Activate/5
+        [HttpGet("Activate/{id}")]
+        public async Task<IActionResult> Activate(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null) return NotFound();
+
+            return View(customer);
+        }
+
+        [HttpPost("Activate/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Activate(int id)
+        {
+            try
+            {
+                var customer = await _context.Customers.FindAsync(id);
+                if (customer == null) return NotFound();
+
+                // Instead of removing, just mark as inactive
+                customer.IsActive = true;
+                _context.Update(customer);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "Customer activated successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Failed to activate customer: {ex.Message}";
                 return RedirectToAction(nameof(Index));
             }
         }
