@@ -23,6 +23,6 @@ public class Customer
     public bool IsActive { get; set; } = true;
 
     // Navigation properties
-    public virtual ICollection<SalesTransaction> SalesTransactions { get; set; }
-    public virtual ICollection<Invoice> Invoices { get; set; }
+    public virtual ICollection<SalesTransaction> SalesTransactions { get; set; } = new List<SalesTransaction>();
+    public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 }

@@ -9,7 +9,9 @@
 
     <div class="row">
         <div class="col-md-6">
-            <form asp-action="Create">
+            <div id="alertMessage"></div>
+            <form id="createCustomerForm" asp-action="Create">
+                @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
@@ -42,7 +44,7 @@
                 </div>
 
                 <div class="form-group mt-3">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <button type="submit" class="btn btn-primary">Create</button>
                     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
                 </div>
             </form>
@@ -54,4 +56,60 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function ()
+        {
+            $("#createCustomerForm").on("submit", function (e)
+            {
+                e.preventDefault();
+
+                if (!$(this).valid())
+                {
+                    $("#alertMessage").html('<div class="alert alert-danger">Please fill in all required fields correctly.</div>');
+                    return false;
+                }
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '@Url.Action("Create")',
+                    type: 'POST',
+                    data: formData,
+                    headers: {
+                        'RequestVerificationToken': $('input:hidden[name="__RequestVerificationToken"]').val()
+                    },
+                    dataType: 'json',
+                    success: function (result)
+                    {
+                        if (result.success)
+                        {
+                            $("#alertMessage").html('<div class="alert alert-success">' + result.message + '</div>');
+                            $("#createCustomerForm")[0].reset();
+                            setTimeout(function ()
+                            {
+                                window.location.href = '@Url.Action("Index")';
+                            }, 2000);
+                        } else
+                        {
+                            $("#alertMessage").html('<div class="alert alert-danger">' + (result.message || 'An error occurred while creating the customer.') + '</div>');
+                        }
+                    },
+                    error: function (xhr, status, error)
+                    {
+                        console.error('Error:', xhr.responseText);
+                        var errorMessage = 'An error occurred while creating the customer.';
+                        try
+                        {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.message)
+                            {
+                                errorMessage = response.message;
+                            }
+                        } catch (e) { }
+                        $("#alertMessage").html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
 }

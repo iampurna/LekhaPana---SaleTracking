@@ -46,24 +46,28 @@ namespace LekhaPana.Controllers
         // POST: Customers/Create
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Email,Phone,Address,IsActive")] Customer customer)
+        public async Task<IActionResult> Create([FromForm][Bind("Name,Email,Phone,Address,IsActive")] Customer customer)
         {
             if (!ModelState.IsValid)
             {
-                return View(customer);
+                return Json(new
+                {
+                    success = false,
+                    message = string.Join(" ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage))
+                });
             }
 
             try
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                TempData["Success"] = "Customer created successfully!";
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true, message = "Customer created successfully!" });
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"An error occurred: {ex.Message}";
-                return View(customer);
+                return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
             }
         }
 
