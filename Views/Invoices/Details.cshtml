@@ -1,7 +1,7 @@
 @model LekhaPana.Models.Invoice
 
 @{
-ViewData["Title"] = "Invoice Details";
+    ViewData["Title"] = "Invoice Details";
 }
 
 <div class="container mt-4">
@@ -11,10 +11,10 @@ ViewData["Title"] = "Invoice Details";
             <div>
                 @if (!Model.IsPaid)
                 {
-                <form asp-action="MarkAsPaid" method="post" style="display: inline;">
-                    <input type="hidden" name="id" value="@Model.InvoiceId" />
-                    <button type="submit" class="btn btn-success">Mark as Paid</button>
-                </form>
+                    <form asp-action="MarkAsPaid" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="@Model.InvoiceId" />
+                        <button type="submit" class="btn btn-success">Mark as Paid</button>
+                    </form>
                 }
                 <a onclick="window.print();" class="btn btn-light ml-2"><i class="bi bi-printer"></i> Print</a>
             </div>
@@ -38,11 +38,11 @@ ViewData["Title"] = "Invoice Details";
                     <div>Status:
                         @if (Model.IsPaid)
                         {
-                        <span class="badge bg-success">Paid</span>
+                            <span class="badge bg-success">Paid</span>
                         }
                         else
                         {
-                        <span class="badge bg-danger">Unpaid</span>
+                            <span class="badge bg-danger">Unpaid</span>
                         }
                     </div>
                 </div>
@@ -51,23 +51,23 @@ ViewData["Title"] = "Invoice Details";
             <div class="table-responsive-sm">
                 <table class="table table-striped">
                     <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
-                        <th>Total</th>
-                    </tr>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Total</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.SalesTransactions)
-                    {
-                    <tr>
-                        <td>@item.Product.Name</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Rate.ToString("C")</td>
-                        <td>@item.Total.ToString("C")</td>
-                    </tr>
-                    }
+                        @foreach (var item in Model.SalesTransactions)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Rate.ToString("C")</td>
+                                <td>@item.Total.ToString("C")</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -76,10 +76,10 @@ ViewData["Title"] = "Invoice Details";
                 <div class="col-lg-4 col-sm-5 ml-auto">
                     <table class="table table-clear">
                         <tbody>
-                        <tr>
-                            <td class="left"><strong>Total</strong></td>
-                            <td class="right"><strong>@Model.InvoiceTotal.ToString("C")</strong></td>
-                        </tr>
+                            <tr>
+                                <td class="left"><strong>Total</strong></td>
+                                <td class="right"><strong>@Model.InvoiceTotal.ToString("C")</strong></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

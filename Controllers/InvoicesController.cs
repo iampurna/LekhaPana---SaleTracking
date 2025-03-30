@@ -119,8 +119,7 @@ namespace LekhaPana.Controllers
         }
 
         // POST: Invoices/MarkAsPaid/5
-        [HttpPost("MarkAsPaid/{id:int}")]
-        [HttpPost]
+        [HttpPost("MarkAsPaid")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MarkAsPaid(int id)
         {
