@@ -1,7 +1,7 @@
 @model LekhaPana.Models.Customer
 
 @{
-ViewData["Title"] = "Edit Customer";
+    ViewData["Title"] = "Edit Customer";
 }
 
 <div class="container mt-4">
@@ -52,5 +52,7 @@ ViewData["Title"] = "Edit Customer";
 </div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

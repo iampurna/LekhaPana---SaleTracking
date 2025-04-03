@@ -29,7 +29,7 @@ namespace LekhaPana.Controllers
                 .ToListAsync());
         }
 
-        // GET: Invoices/Details/5
+
         [HttpGet("Details/{id:int}")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,7 +52,7 @@ namespace LekhaPana.Controllers
             return View(invoice);
         }
 
-        // GET: Invoices/Generate
+
         [HttpGet("Generate")]
         public IActionResult Generate()
         {
@@ -60,7 +60,7 @@ namespace LekhaPana.Controllers
             return View(new GenerateInvoiceViewModel());
         }
 
-        // POST: Invoices/Generate
+
         [HttpPost("Generate")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -118,7 +118,7 @@ namespace LekhaPana.Controllers
             return View(viewModel);
         }
 
-        // POST: Invoices/MarkAsPaid/5
+
         [HttpPost("MarkAsPaid")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MarkAsPaid(int id)

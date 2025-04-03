@@ -24,7 +24,7 @@ public class Invoice
 
     public bool IsPaid { get; set; } = false;
 
-    // Navigation properties
+
     [ForeignKey("CustomerId")]
     public virtual Customer Customer { get; set; }
     public virtual ICollection<SalesTransaction> SalesTransactions { get; set; }

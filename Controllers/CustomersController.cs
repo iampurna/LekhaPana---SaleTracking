@@ -16,7 +16,7 @@ namespace LekhaPana.Controllers
             _context = context;
         }
 
-        // GET: Customers
+
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
@@ -36,14 +36,14 @@ namespace LekhaPana.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Create
+
         [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm][Bind("Name,Email,Phone,Address,IsActive")] Customer customer)
@@ -71,7 +71,7 @@ namespace LekhaPana.Controllers
             }
         }
 
-        // GET: Customers/Edit/5
+
         [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -83,7 +83,7 @@ namespace LekhaPana.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Edit/5
+
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Name,Email,Phone,Address,IsActive")] Customer customer)
@@ -111,7 +111,7 @@ namespace LekhaPana.Controllers
             }
         }
 
-        // GET: Customers/Delete/5
+
         [HttpGet("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -123,7 +123,7 @@ namespace LekhaPana.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Delete/5
+
         [HttpPost("DeleteConfirmed/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -133,7 +133,7 @@ namespace LekhaPana.Controllers
                 var customer = await _context.Customers.FindAsync(id);
                 if (customer == null) return NotFound();
 
-                // Instead of removing, just mark as inactive
+
                 customer.IsActive = false;
                 _context.Update(customer);
                 await _context.SaveChangesAsync();
@@ -148,7 +148,7 @@ namespace LekhaPana.Controllers
             }
         }
 
-        // GET: Customers/Activate/5
+
         [HttpGet("Activate/{id}")]
         public async Task<IActionResult> Activate(int? id)
         {

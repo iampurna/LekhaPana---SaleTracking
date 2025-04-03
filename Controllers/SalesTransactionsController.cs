@@ -31,7 +31,7 @@ namespace LekhaPana.Controllers
             return View(transactions);
         }
 
-        // GET: SalesTransactions/Create
+
         [Route("Create")]
         public IActionResult Create()
         {
@@ -41,7 +41,7 @@ namespace LekhaPana.Controllers
             return View(new SalesTransactionViewModel());
         }
 
-        // POST: SalesTransactions/Create
+
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,7 +76,7 @@ namespace LekhaPana.Controllers
             return View(viewModel);
         }
 
-        // GET: SalesTransactions/Edit/5
+
         [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -109,7 +109,7 @@ namespace LekhaPana.Controllers
             return View(viewModel);
         }
 
-        // POST: SalesTransactions/Edit/5
+
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]

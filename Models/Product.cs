@@ -23,7 +23,7 @@ public class Product
     public bool IsActive { get; set; } = true;
 
 
-    // Navigation property
+
     [ValidateNever]
     public virtual ICollection<SalesTransaction> SalesTransactions { get; set; } = new List<SalesTransaction>();
 }

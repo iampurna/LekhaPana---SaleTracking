@@ -29,7 +29,7 @@ public class SalesTransaction
 
     public int? InvoiceId { get; set; }
 
-    // Navigation properties
+
     [ForeignKey("ProductId")]
     public virtual Product Product { get; set; }
 

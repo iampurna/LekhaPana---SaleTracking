@@ -23,14 +23,14 @@ namespace LekhaPana.Controllers
             return View(await _context.Products.ToListAsync());
         }
 
-        // GET: Products/Create
+
         [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Description,Price,IsActive")] Product product)
@@ -69,7 +69,7 @@ namespace LekhaPana.Controllers
             }
         }
 
-        // GET: Products/Edit/5
+
         [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -87,7 +87,7 @@ namespace LekhaPana.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
+
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Description,Price,IsActive")] Product product)
